@@ -30,7 +30,6 @@
 #include <SoftwareSerial.h>
 #include <ModbusMaster.h>
 #include <ESP8266WiFi.h>
-#include <iotbundle.h>
 
 const char *ssid = "wifi_ssid";
 const char *password = "wifi_pass";
@@ -38,9 +37,9 @@ const char *password = "wifi_pass";
 SoftwareSerial PZEMSerial;
 
 // ตั้งค่า pin สำหรับต่อกับ MAX485
-#define MAX485_RO D7
-#define MAX485_RE D6
-#define MAX485_DE D5
+#define MAX485_RO D3
+#define MAX485_RE D2
+#define MAX485_DE D1
 #define MAX485_DI D0
 
 // Address ของ PZEM-017 : 0x01-0xF7
