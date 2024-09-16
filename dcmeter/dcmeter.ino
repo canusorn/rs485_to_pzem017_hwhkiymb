@@ -15,8 +15,8 @@
 
     VCC            5V
     GND            GND
-     A             A
-     B             B
+    A              D4
+    B              D3
 -----------------------------------------------------------------------------------------------------------------------------------------------
     การแก้ไขโค๊ด
     - ติดตั้ง ESP8266 จาก Board manager
@@ -29,18 +29,14 @@
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/ ////////////*/
 #include <SoftwareSerial.h>
 #include <ModbusMaster.h>
-#include <ESP8266WiFi.h>
-
-const char *ssid = "wifi_ssid";
-const char *password = "wifi_pass";
 
 SoftwareSerial PZEMSerial;
 
 // ตั้งค่า pin สำหรับต่อกับ MAX485
-#define MAX485_RO D3
+#define MAX485_RO D4
+#define MAX485_DI D3
 #define MAX485_RE D2
 #define MAX485_DE D1
-#define MAX485_DI D0
 
 // Address ของ PZEM-017 : 0x01-0xF7
 static uint8_t pzemSlaveAddr = 0x01;
@@ -72,14 +68,6 @@ void setup()
     node.preTransmission(preTransmission); // Callbacks allow us to configure the RS485 transceiver correctly
     node.postTransmission(postTransmission);
     node.begin(pzemSlaveAddr, PZEMSerial);
-
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(500);
-        Serial.print(".");
-    }
 
     // รอครบ 5 วินาที แล้วตั้งค่า shunt และ address
     Serial.print("Setting PZEM 017 ");
